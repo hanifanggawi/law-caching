@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  postgres-db:
+    image: "postgres:latest"
+    ports:
+      - "$DB_PORT:5432"
+    restart: always
+    environment: 
+      - POSTGRES_USER=$DATABASE_USERNAME
+      - POSTGRES_PASSWORD=$DATABASE_PASSWORD
+      - POSTGRES_DB=$DATABASE_NAME
+      - POSTGRES_SCHEMA=$DATABASE_SCHEMA
+    volumes:
+      - db:/var/lib/postgresql/data/
+      - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+
+volumes:
+  db:
+    driver: local
